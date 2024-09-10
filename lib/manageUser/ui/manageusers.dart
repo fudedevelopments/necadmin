@@ -18,18 +18,6 @@ class UserList extends StatefulWidget {
 class _UserListState extends State<UserList> {
   bool _showStudents = true;
 
-  final List<Map<String, String>> _students = [
-    {'name': 'John Doe', 'email': 'john.doe@student.com'},
-    {'name': 'Jane Smith', 'email': 'jane.smith@student.com'},
-    {'name': 'Michael Brown', 'email': 'michael.brown@student.com'},
-  ];
-
-  final List<Map<String, String>> _staff = [
-    {'name': 'Emily Clark', 'email': 'emily.clark@staff.com'},
-    {'name': 'David Johnson', 'email': 'david.johnson@staff.com'},
-    {'name': 'Laura Wilson', 'email': 'laura.wilson@staff.com'},
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -123,7 +111,7 @@ class _UserListState extends State<UserList> {
                             ),
                           ),
                           title: Text(
-                            _showStudents ? students[index].name : staff[index].name ,
+                            _showStudents ? students[index].email : staff[index].email ,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.teal.shade900,
@@ -140,11 +128,7 @@ class _UserListState extends State<UserList> {
                                 Icon(Icons.delete, color: Colors.teal.shade600),
                             onPressed: () {
                               setState(() {
-                                if (_showStudents) {
-                                  _students.removeAt(index);
-                                } else {
-                                  _staff.removeAt(index);
-                                }
+                                
                               });
                             },
                           ),

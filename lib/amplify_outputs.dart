@@ -116,6 +116,178 @@ const amplifyConfig = '''{
               "properties": {
                 "rules": [
                   {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "operations": [
+                      "read"
+                    ],
+                    "groups": [
+                      "STUDENTS"
+                    ]
+                  },
+                  {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "groups": [
+                      "ADMINS",
+                      "STAFF"
+                    ],
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
+        "OnDutyRequest": {
+          "name": "OnDutyRequest",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "studentname": {
+              "name": "studentname",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "stdentemail": {
+              "name": "stdentemail",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "eventname": {
+              "name": "eventname",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "date": {
+              "name": "date",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "location": {
+              "name": "location",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "registerurl": {
+              "name": "registerurl",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "documents": {
+              "name": "documents",
+              "isArray": true,
+              "type": "String",
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true
+            },
+            "proctorstatus": {
+              "name": "proctorstatus",
+              "isArray": false,
+              "type": {
+                "enum": "Proctorstatus"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "proctorcomments": {
+              "name": "proctorcomments",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "acstatus": {
+              "name": "acstatus",
+              "isArray": false,
+              "type": {
+                "enum": "Acstatus"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "accomments": {
+              "name": "accomments",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "finalstatus": {
+              "name": "finalstatus",
+              "isArray": false,
+              "type": {
+                "enum": "Finalstatus"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "finalcomments": {
+              "name": "finalcomments",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            }
+          },
+          "syncable": true,
+          "pluralName": "OnDutyRequests",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
                     "provider": "userPools",
                     "ownerField": "owner",
                     "allow": "owner",
@@ -138,8 +310,55 @@ const amplifyConfig = '''{
           }
         }
       },
-      "enums": {},
+      "enums": {
+        "Proctorstatus": {
+          "name": "Proctorstatus",
+          "values": [
+            "PENDING",
+            "APPROVED",
+            "REJECTED"
+          ]
+        },
+        "Acstatus": {
+          "name": "Acstatus",
+          "values": [
+            "PENDING",
+            "APPROVED",
+            "REJECTED"
+          ]
+        },
+        "Finalstatus": {
+          "name": "Finalstatus",
+          "values": [
+            "PENDING",
+            "APPROVED",
+            "REJECTED"
+          ]
+        }
+      },
       "nonModels": {},
+      "queries": {
+        "listUsersInGroup": {
+          "name": "listUsersInGroup",
+          "isArray": false,
+          "type": "AWSJSON",
+          "isRequired": false,
+          "arguments": {
+            "groupName": {
+              "name": "groupName",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true
+            }
+          }
+        },
+        "listUsers": {
+          "name": "listUsers",
+          "isArray": false,
+          "type": "AWSJSON",
+          "isRequired": false
+        }
+      },
       "mutations": {
         "addUserToGroup": {
           "name": "addUserToGroup",
@@ -160,9 +379,60 @@ const amplifyConfig = '''{
               "isRequired": true
             }
           }
+        },
+        "createUser": {
+          "name": "createUser",
+          "isArray": false,
+          "type": "AWSJSON",
+          "isRequired": false,
+          "arguments": {
+            "username": {
+              "name": "username",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true
+            },
+            "email": {
+              "name": "email",
+              "isArray": false,
+              "type": "AWSEmail",
+              "isRequired": true
+            },
+            "password": {
+              "name": "password",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true
+            }
+          }
+        },
+        "createGroup": {
+          "name": "createGroup",
+          "isArray": false,
+          "type": "AWSJSON",
+          "isRequired": false,
+          "arguments": {
+            "groupName": {
+              "name": "groupName",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true
+            }
+          }
         }
       }
     }
+  },
+  "storage": {
+    "aws_region": "ap-south-1",
+    "bucket_name": "amplify-necbakend-prave-sa-appimagesbucket9e700c22-2th8sysmet9k",
+    "buckets": [
+      {
+        "name": "Appimages",
+        "bucket_name": "amplify-necbakend-prave-sa-appimagesbucket9e700c22-2th8sysmet9k",
+        "aws_region": "ap-south-1"
+      }
+    ]
   },
   "version": "1.1"
 }''';

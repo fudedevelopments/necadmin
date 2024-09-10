@@ -58,11 +58,9 @@ listUsersInGroup() async {
   );
   final response = await Amplify.API.query(request: echoRequest).response;
   Map<String, dynamic> jsonMap = json.decode(response.data!);
-
   var res = graphqlresponsehandle(
       response: response,
       function: () {
-        //students decode
         String studens = jsonMap['students'];
         List<dynamic> studentslist = jsonDecode(studens);
         List<Studentsmodel> studentsmodels = [];
@@ -70,6 +68,7 @@ listUsersInGroup() async {
           Map<String, String> resultMapstudens = {
             for (var item in studentslist[i]) item['Name']!: item['Value']!
           };
+          safePrint(resultMapstudens);
           Studentsmodel model = Studentsmodel.fromMap(resultMapstudens);
           studentsmodels.add(model);
         }
