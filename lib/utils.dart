@@ -35,3 +35,17 @@ handlebloc(
 void showsnakbar(BuildContext context, String text) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
 }
+
+navigatorpushandremove(BuildContext context, Widget route) {
+  Navigator.pushAndRemoveUntil(context,
+      MaterialPageRoute(builder: (context) => route), (route) => false);
+}
+
+Future<String> getimage({required String path}) async {
+  final result = await Amplify.Storage.getUrl(
+    path: StoragePath.fromString(path),
+  ).result;
+  final url = result.url;
+  final urlstr = url.toString();
+  return urlstr;
+}
