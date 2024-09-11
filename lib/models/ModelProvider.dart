@@ -21,14 +21,18 @@
 
 import 'package:amplify_core/amplify_core.dart' as amplify_core;
 import 'EventDetatils.dart';
+import 'Proctor.dart';
+import 'Student.dart';
 
 export 'EventDetatils.dart';
+export 'Proctor.dart';
+export 'Student.dart';
 
 class ModelProvider implements amplify_core.ModelProviderInterface {
   @override
-  String version = "8cda23e1d953e782b8f8be0a94c15ec7";
+  String version = "ea2e85404a4c67c0c5e1cb2e231171a7";
   @override
-  List<amplify_core.ModelSchema> modelSchemas = [EventDetatils.schema];
+  List<amplify_core.ModelSchema> modelSchemas = [EventDetatils.schema, Proctor.schema, Student.schema];
   @override
   List<amplify_core.ModelSchema> customTypeSchemas = [];
   static final ModelProvider _instance = ModelProvider();
@@ -39,6 +43,10 @@ class ModelProvider implements amplify_core.ModelProviderInterface {
     switch(modelName) {
       case "EventDetatils":
         return EventDetatils.classType;
+      case "Proctor":
+        return Proctor.classType;
+      case "Student":
+        return Student.classType;
       default:
         throw Exception("Failed to find model in model provider for model name: " + modelName);
     }

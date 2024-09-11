@@ -25,7 +25,7 @@ const amplifyConfig = '''{
     "unauthenticated_identities_enabled": true
   },
   "data": {
-    "url": "https://tzuedot2vbcyzpfkrrw62dozqa.appsync-api.ap-south-1.amazonaws.com/graphql",
+    "url": "https://4mu2welep5cwpj5acizv6m6ciu.appsync-api.ap-south-1.amazonaws.com/graphql",
     "aws_region": "ap-south-1",
     "default_authorization_type": "AMAZON_COGNITO_USER_POOLS",
     "authorization_types": [
@@ -151,8 +151,8 @@ const amplifyConfig = '''{
             "sortKeyFieldNames": []
           }
         },
-        "OnDutyRequest": {
-          "name": "OnDutyRequest",
+        "Student": {
+          "name": "Student",
           "fields": {
             "id": {
               "name": "id",
@@ -168,96 +168,34 @@ const amplifyConfig = '''{
               "isRequired": false,
               "attributes": []
             },
-            "stdentemail": {
-              "name": "stdentemail",
+            "email": {
+              "name": "email",
               "isArray": false,
-              "type": "String",
+              "type": "AWSEmail",
               "isRequired": false,
               "attributes": []
             },
-            "eventname": {
-              "name": "eventname",
+            "proctorid": {
+              "name": "proctorid",
               "isArray": false,
-              "type": "String",
+              "type": "ID",
               "isRequired": false,
               "attributes": []
             },
-            "date": {
-              "name": "date",
+            "proctor": {
+              "name": "proctor",
               "isArray": false,
-              "type": "String",
-              "isRequired": false,
-              "attributes": []
-            },
-            "location": {
-              "name": "location",
-              "isArray": false,
-              "type": "String",
-              "isRequired": false,
-              "attributes": []
-            },
-            "registerurl": {
-              "name": "registerurl",
-              "isArray": false,
-              "type": "String",
-              "isRequired": false,
-              "attributes": []
-            },
-            "documents": {
-              "name": "documents",
-              "isArray": true,
-              "type": "String",
+              "type": {
+                "model": "Proctor"
+              },
               "isRequired": false,
               "attributes": [],
-              "isArrayNullable": true
-            },
-            "proctorstatus": {
-              "name": "proctorstatus",
-              "isArray": false,
-              "type": {
-                "enum": "Proctorstatus"
-              },
-              "isRequired": false,
-              "attributes": []
-            },
-            "proctorcomments": {
-              "name": "proctorcomments",
-              "isArray": false,
-              "type": "String",
-              "isRequired": false,
-              "attributes": []
-            },
-            "acstatus": {
-              "name": "acstatus",
-              "isArray": false,
-              "type": {
-                "enum": "Acstatus"
-              },
-              "isRequired": false,
-              "attributes": []
-            },
-            "accomments": {
-              "name": "accomments",
-              "isArray": false,
-              "type": "String",
-              "isRequired": false,
-              "attributes": []
-            },
-            "finalstatus": {
-              "name": "finalstatus",
-              "isArray": false,
-              "type": {
-                "enum": "Finalstatus"
-              },
-              "isRequired": false,
-              "attributes": []
-            },
-            "finalcomments": {
-              "name": "finalcomments",
-              "isArray": false,
-              "type": "String",
-              "isRequired": false,
-              "attributes": []
+              "association": {
+                "connectionType": "BELONGS_TO",
+                "targetNames": [
+                  "proctorid"
+                ]
+              }
             },
             "createdAt": {
               "name": "createdAt",
@@ -277,7 +215,7 @@ const amplifyConfig = '''{
             }
           },
           "syncable": true,
-          "pluralName": "OnDutyRequests",
+          "pluralName": "Students",
           "attributes": [
             {
               "type": "model",
@@ -288,10 +226,106 @@ const amplifyConfig = '''{
               "properties": {
                 "rules": [
                   {
+                    "groupClaim": "cognito:groups",
                     "provider": "userPools",
-                    "ownerField": "owner",
-                    "allow": "owner",
-                    "identityClaim": "cognito:username",
+                    "allow": "groups",
+                    "groups": [
+                      "ADMINS",
+                      "STAFF"
+                    ],
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
+        "Proctor": {
+          "name": "Proctor",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "proctorname": {
+              "name": "proctorname",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "email": {
+              "name": "email",
+              "isArray": false,
+              "type": "AWSEmail",
+              "isRequired": false,
+              "attributes": []
+            },
+            "students": {
+              "name": "students",
+              "isArray": true,
+              "type": {
+                "model": "Student"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true,
+              "association": {
+                "connectionType": "HAS_MANY",
+                "associatedWith": [
+                  "proctorid"
+                ]
+              }
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            }
+          },
+          "syncable": true,
+          "pluralName": "Proctors",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "groups": [
+                      "ADMINS",
+                      "STAFF"
+                    ],
                     "operations": [
                       "create",
                       "update",
@@ -310,32 +344,7 @@ const amplifyConfig = '''{
           }
         }
       },
-      "enums": {
-        "Proctorstatus": {
-          "name": "Proctorstatus",
-          "values": [
-            "PENDING",
-            "APPROVED",
-            "REJECTED"
-          ]
-        },
-        "Acstatus": {
-          "name": "Acstatus",
-          "values": [
-            "PENDING",
-            "APPROVED",
-            "REJECTED"
-          ]
-        },
-        "Finalstatus": {
-          "name": "Finalstatus",
-          "values": [
-            "PENDING",
-            "APPROVED",
-            "REJECTED"
-          ]
-        }
-      },
+      "enums": {},
       "nonModels": {},
       "queries": {
         "listUsersInGroup": {

@@ -68,7 +68,6 @@ listUsersInGroup() async {
           Map<String, String> resultMapstudens = {
             for (var item in studentslist[i]) item['Name']!: item['Value']!
           };
-          safePrint(resultMapstudens);
           Studentsmodel model = Studentsmodel.fromMap(resultMapstudens);
           studentsmodels.add(model);
         }
