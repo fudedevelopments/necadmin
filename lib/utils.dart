@@ -41,6 +41,15 @@ navigatorpushandremove(BuildContext context, Widget route) {
       MaterialPageRoute(builder: (context) => route), (route) => false);
 }
 
+
+navigationpush(BuildContext context, Widget route) {
+  Navigator.push(context, (MaterialPageRoute(builder: (context) => route)));
+}
+
+pop(BuildContext context) {
+  Navigator.pop(context);
+}
+
 Future<String> getimage({required String path}) async {
   final result = await Amplify.Storage.getUrl(
     path: StoragePath.fromString(path),

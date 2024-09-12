@@ -151,8 +151,8 @@ const amplifyConfig = '''{
             "sortKeyFieldNames": []
           }
         },
-        "Student": {
-          "name": "Student",
+        "Class": {
+          "name": "Class",
           "fields": {
             "id": {
               "name": "id",
@@ -161,41 +161,12 @@ const amplifyConfig = '''{
               "isRequired": true,
               "attributes": []
             },
-            "studentname": {
-              "name": "studentname",
+            "classname": {
+              "name": "classname",
               "isArray": false,
               "type": "String",
               "isRequired": false,
               "attributes": []
-            },
-            "email": {
-              "name": "email",
-              "isArray": false,
-              "type": "AWSEmail",
-              "isRequired": false,
-              "attributes": []
-            },
-            "proctorid": {
-              "name": "proctorid",
-              "isArray": false,
-              "type": "ID",
-              "isRequired": false,
-              "attributes": []
-            },
-            "proctor": {
-              "name": "proctor",
-              "isArray": false,
-              "type": {
-                "model": "Proctor"
-              },
-              "isRequired": false,
-              "attributes": [],
-              "association": {
-                "connectionType": "BELONGS_TO",
-                "targetNames": [
-                  "proctorid"
-                ]
-              }
             },
             "createdAt": {
               "name": "createdAt",
@@ -215,100 +186,7 @@ const amplifyConfig = '''{
             }
           },
           "syncable": true,
-          "pluralName": "Students",
-          "attributes": [
-            {
-              "type": "model",
-              "properties": {}
-            },
-            {
-              "type": "auth",
-              "properties": {
-                "rules": [
-                  {
-                    "groupClaim": "cognito:groups",
-                    "provider": "userPools",
-                    "allow": "groups",
-                    "groups": [
-                      "ADMINS",
-                      "STAFF"
-                    ],
-                    "operations": [
-                      "create",
-                      "update",
-                      "delete",
-                      "read"
-                    ]
-                  }
-                ]
-              }
-            }
-          ],
-          "primaryKeyInfo": {
-            "isCustomPrimaryKey": false,
-            "primaryKeyFieldName": "id",
-            "sortKeyFieldNames": []
-          }
-        },
-        "Proctor": {
-          "name": "Proctor",
-          "fields": {
-            "id": {
-              "name": "id",
-              "isArray": false,
-              "type": "ID",
-              "isRequired": true,
-              "attributes": []
-            },
-            "proctorname": {
-              "name": "proctorname",
-              "isArray": false,
-              "type": "String",
-              "isRequired": false,
-              "attributes": []
-            },
-            "email": {
-              "name": "email",
-              "isArray": false,
-              "type": "AWSEmail",
-              "isRequired": false,
-              "attributes": []
-            },
-            "students": {
-              "name": "students",
-              "isArray": true,
-              "type": {
-                "model": "Student"
-              },
-              "isRequired": false,
-              "attributes": [],
-              "isArrayNullable": true,
-              "association": {
-                "connectionType": "HAS_MANY",
-                "associatedWith": [
-                  "proctorid"
-                ]
-              }
-            },
-            "createdAt": {
-              "name": "createdAt",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": [],
-              "isReadOnly": true
-            },
-            "updatedAt": {
-              "name": "updatedAt",
-              "isArray": false,
-              "type": "AWSDateTime",
-              "isRequired": false,
-              "attributes": [],
-              "isReadOnly": true
-            }
-          },
-          "syncable": true,
-          "pluralName": "Proctors",
+          "pluralName": "Classes",
           "attributes": [
             {
               "type": "model",
