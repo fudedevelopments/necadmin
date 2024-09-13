@@ -29,6 +29,7 @@ class Ac extends amplify_core.Model {
   final String id;
   final String? _acname;
   final String? _email;
+  final ClassRoom? _classRoom;
   final amplify_core.TemporalDateTime? _createdAt;
   final amplify_core.TemporalDateTime? _updatedAt;
 
@@ -53,6 +54,10 @@ class Ac extends amplify_core.Model {
     return _email;
   }
   
+  ClassRoom? get classRoom {
+    return _classRoom;
+  }
+  
   amplify_core.TemporalDateTime? get createdAt {
     return _createdAt;
   }
@@ -61,13 +66,14 @@ class Ac extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const Ac._internal({required this.id, acname, email, createdAt, updatedAt}): _acname = acname, _email = email, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Ac._internal({required this.id, acname, email, classRoom, createdAt, updatedAt}): _acname = acname, _email = email, _classRoom = classRoom, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Ac({String? id, String? acname, String? email}) {
+  factory Ac({String? id, String? acname, String? email, ClassRoom? classRoom}) {
     return Ac._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       acname: acname,
-      email: email);
+      email: email,
+      classRoom: classRoom);
   }
   
   bool equals(Object other) {
@@ -80,7 +86,8 @@ class Ac extends amplify_core.Model {
     return other is Ac &&
       id == other.id &&
       _acname == other._acname &&
-      _email == other._email;
+      _email == other._email &&
+      _classRoom == other._classRoom;
   }
   
   @override
@@ -94,6 +101,7 @@ class Ac extends amplify_core.Model {
     buffer.write("id=" + "$id" + ", ");
     buffer.write("acname=" + "$_acname" + ", ");
     buffer.write("email=" + "$_email" + ", ");
+    buffer.write("classRoom=" + (_classRoom != null ? _classRoom!.toString() : "null") + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -101,21 +109,24 @@ class Ac extends amplify_core.Model {
     return buffer.toString();
   }
   
-  Ac copyWith({String? acname, String? email}) {
+  Ac copyWith({String? acname, String? email, ClassRoom? classRoom}) {
     return Ac._internal(
       id: id,
       acname: acname ?? this.acname,
-      email: email ?? this.email);
+      email: email ?? this.email,
+      classRoom: classRoom ?? this.classRoom);
   }
   
   Ac copyWithModelFieldValues({
     ModelFieldValue<String?>? acname,
-    ModelFieldValue<String?>? email
+    ModelFieldValue<String?>? email,
+    ModelFieldValue<ClassRoom?>? classRoom
   }) {
     return Ac._internal(
       id: id,
       acname: acname == null ? this.acname : acname.value,
-      email: email == null ? this.email : email.value
+      email: email == null ? this.email : email.value,
+      classRoom: classRoom == null ? this.classRoom : classRoom.value
     );
   }
   
@@ -123,17 +134,23 @@ class Ac extends amplify_core.Model {
     : id = json['id'],
       _acname = json['acname'],
       _email = json['email'],
+      _classRoom = json['classRoom'] != null
+        ? json['classRoom']['serializedData'] != null
+          ? ClassRoom.fromJson(new Map<String, dynamic>.from(json['classRoom']['serializedData']))
+          : ClassRoom.fromJson(new Map<String, dynamic>.from(json['classRoom']))
+        : null,
       _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'acname': _acname, 'email': _email, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'acname': _acname, 'email': _email, 'classRoom': _classRoom?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
     'id': id,
     'acname': _acname,
     'email': _email,
+    'classRoom': _classRoom,
     'createdAt': _createdAt,
     'updatedAt': _updatedAt
   };
@@ -142,6 +159,9 @@ class Ac extends amplify_core.Model {
   static final ID = amplify_core.QueryField(fieldName: "id");
   static final ACNAME = amplify_core.QueryField(fieldName: "acname");
   static final EMAIL = amplify_core.QueryField(fieldName: "email");
+  static final CLASSROOM = amplify_core.QueryField(
+    fieldName: "classRoom",
+    fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'ClassRoom'));
   static var schema = amplify_core.Model.defineSchema(define: (amplify_core.ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Ac";
     modelSchemaDefinition.pluralName = "Acs";
@@ -172,6 +192,13 @@ class Ac extends amplify_core.Model {
       key: Ac.EMAIL,
       isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.belongsTo(
+      key: Ac.CLASSROOM,
+      isRequired: false,
+      targetNames: ['classRoomid'],
+      ofModelName: 'ClassRoom'
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.nonQueryField(

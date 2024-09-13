@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:necadmin/assign_users/assignbloc/assign_bloc.dart';
 import 'package:necadmin/assign_users/ui/assign_users_page.dart';
+import 'package:necadmin/landing_page/ui/landing_page.dart';
 import 'package:necadmin/models/ModelProvider.dart';
 import 'package:necadmin/utils.dart';
 
@@ -107,7 +108,7 @@ class _CreateClassScreenState extends State<CreateClassScreen> {
                     listener: (context, state) {
                       if (state is CreateClassSuccessState) {
                         showsnakbar(context, "class created successfully");
-                        navigatorpushandremove(context, const AssignUsersPage());
+                        navigatorpushandremove(context, const LandingPage());
                       }
                       if (state is CreateClassfailureState) {
                         showsnakbar(context, "failed in creating class");

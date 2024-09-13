@@ -1,11 +1,10 @@
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:http/http.dart';
-import 'package:necadmin/models/Class.dart';
+import 'package:necadmin/models/ModelProvider.dart';
 import 'package:necadmin/utils.dart';
 
 createclass({required String classname}) async {
-  final createClass = Class(classname: classname);
+  final createClass = ClassRoom(classRoomname: classname);
   final classreq = ModelMutations.create(createClass);
   final response = await Amplify.API.mutate(request: classreq).response;
   List res = graphqlresponsehandle(
@@ -17,22 +16,22 @@ createclass({required String classname}) async {
 }
 
 getAllClasses() async {
-  final request = ModelQueries.list(Class.classType);
+  final request = ModelQueries.list(ClassRoom.classType);
   final responses = await Amplify.API.query(request: request).response;
+  List<ClassRoom?>? classroom = responses.data?.items;
   List res = graphqlresponsehandle(
       response: responses,
+      emptyListresponse: classroom,
       function: () {
-        List<Class?>? classes = responses.data?.items;
-        if (classes != null) {
-          List<Class> classeslist = [];
-          for (int i = 0; i < classes.length; i++) {
-            classeslist.add(classes[i]!);
+        if (classroom != null) {
+          List<ClassRoom> classroomlist = [];
+          for (int i = 0; i < classroom.length; i++) {
+            classroomlist.add(classroom[i]!);
           }
-          safePrint(classeslist[0].classname);
-          return classeslist;
+          return classroomlist;
         } else {
           safePrint('No classes found');
         }
       });
   return res;
-}
+ }

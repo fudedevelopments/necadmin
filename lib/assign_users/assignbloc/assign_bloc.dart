@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:necadmin/assign_users/repo/assign_repo.dart';
 import 'package:necadmin/utils.dart';
@@ -13,8 +14,9 @@ class AssignBloc extends Bloc<AssignEvent, AssignState> {
     on<CreateclassEvent>(createclassevent);
   }
 
-
-  FutureOr<void> createclassevent(CreateclassEvent event, Emitter<AssignState> emit) async{
+  FutureOr<void> createclassevent(
+      CreateclassEvent event, Emitter<AssignState> emit) async {
+    emit(CreateClassloadingState());
     List res = await createclass(classname: event.classname);
     handlebloc(
         statuscode: res[0],

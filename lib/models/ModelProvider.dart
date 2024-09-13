@@ -21,24 +21,26 @@
 
 import 'package:amplify_core/amplify_core.dart' as amplify_core;
 import 'Ac.dart';
-import 'Class.dart';
-import 'Dean.dart';
+import 'ClassRoom.dart';
 import 'EventDetatils.dart';
+import 'Hod.dart';
+import 'Ondutyrequest.dart';
 import 'Proctor.dart';
 import 'Student.dart';
 
 export 'Ac.dart';
-export 'Class.dart';
-export 'Dean.dart';
+export 'ClassRoom.dart';
 export 'EventDetatils.dart';
+export 'Hod.dart';
+export 'Ondutyrequest.dart';
 export 'Proctor.dart';
 export 'Student.dart';
 
 class ModelProvider implements amplify_core.ModelProviderInterface {
   @override
-  String version = "26b7a93816b9646c12cb8b7ec5f7ac57";
+  String version = "375dbb4e3b6616be5435caad8af8d7a1";
   @override
-  List<amplify_core.ModelSchema> modelSchemas = [Ac.schema, Class.schema, Dean.schema, EventDetatils.schema, Proctor.schema, Student.schema];
+  List<amplify_core.ModelSchema> modelSchemas = [Ac.schema, ClassRoom.schema, EventDetatils.schema, Hod.schema, Ondutyrequest.schema, Proctor.schema, Student.schema];
   @override
   List<amplify_core.ModelSchema> customTypeSchemas = [];
   static final ModelProvider _instance = ModelProvider();
@@ -49,12 +51,14 @@ class ModelProvider implements amplify_core.ModelProviderInterface {
     switch(modelName) {
       case "Ac":
         return Ac.classType;
-      case "Class":
-        return Class.classType;
-      case "Dean":
-        return Dean.classType;
+      case "ClassRoom":
+        return ClassRoom.classType;
       case "EventDetatils":
         return EventDetatils.classType;
+      case "Hod":
+        return Hod.classType;
+      case "Ondutyrequest":
+        return Ondutyrequest.classType;
       case "Proctor":
         return Proctor.classType;
       case "Student":

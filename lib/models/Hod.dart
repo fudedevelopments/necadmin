@@ -23,12 +23,13 @@ import 'ModelProvider.dart';
 import 'package:amplify_core/amplify_core.dart' as amplify_core;
 
 
-/** This is an auto generated class representing the Dean type in your schema. */
-class Dean extends amplify_core.Model {
-  static const classType = const _DeanModelType();
+/** This is an auto generated class representing the Hod type in your schema. */
+class Hod extends amplify_core.Model {
+  static const classType = const _HodModelType();
   final String id;
-  final String? _deanname;
+  final String? _hodname;
   final String? _email;
+  final ClassRoom? _classRoom;
   final amplify_core.TemporalDateTime? _createdAt;
   final amplify_core.TemporalDateTime? _updatedAt;
 
@@ -39,18 +40,22 @@ class Dean extends amplify_core.Model {
   @override
   String getId() => id;
   
-  DeanModelIdentifier get modelIdentifier {
-      return DeanModelIdentifier(
+  HodModelIdentifier get modelIdentifier {
+      return HodModelIdentifier(
         id: id
       );
   }
   
-  String? get deanname {
-    return _deanname;
+  String? get hodname {
+    return _hodname;
   }
   
   String? get email {
     return _email;
+  }
+  
+  ClassRoom? get classRoom {
+    return _classRoom;
   }
   
   amplify_core.TemporalDateTime? get createdAt {
@@ -61,13 +66,14 @@ class Dean extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const Dean._internal({required this.id, deanname, email, createdAt, updatedAt}): _deanname = deanname, _email = email, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Hod._internal({required this.id, hodname, email, classRoom, createdAt, updatedAt}): _hodname = hodname, _email = email, _classRoom = classRoom, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Dean({String? id, String? deanname, String? email}) {
-    return Dean._internal(
+  factory Hod({String? id, String? hodname, String? email, ClassRoom? classRoom}) {
+    return Hod._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
-      deanname: deanname,
-      email: email);
+      hodname: hodname,
+      email: email,
+      classRoom: classRoom);
   }
   
   bool equals(Object other) {
@@ -77,10 +83,11 @@ class Dean extends amplify_core.Model {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Dean &&
+    return other is Hod &&
       id == other.id &&
-      _deanname == other._deanname &&
-      _email == other._email;
+      _hodname == other._hodname &&
+      _email == other._email &&
+      _classRoom == other._classRoom;
   }
   
   @override
@@ -90,10 +97,11 @@ class Dean extends amplify_core.Model {
   String toString() {
     var buffer = new StringBuffer();
     
-    buffer.write("Dean {");
+    buffer.write("Hod {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("deanname=" + "$_deanname" + ", ");
+    buffer.write("hodname=" + "$_hodname" + ", ");
     buffer.write("email=" + "$_email" + ", ");
+    buffer.write("classRoom=" + (_classRoom != null ? _classRoom!.toString() : "null") + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -101,50 +109,62 @@ class Dean extends amplify_core.Model {
     return buffer.toString();
   }
   
-  Dean copyWith({String? deanname, String? email}) {
-    return Dean._internal(
+  Hod copyWith({String? hodname, String? email, ClassRoom? classRoom}) {
+    return Hod._internal(
       id: id,
-      deanname: deanname ?? this.deanname,
-      email: email ?? this.email);
+      hodname: hodname ?? this.hodname,
+      email: email ?? this.email,
+      classRoom: classRoom ?? this.classRoom);
   }
   
-  Dean copyWithModelFieldValues({
-    ModelFieldValue<String?>? deanname,
-    ModelFieldValue<String?>? email
+  Hod copyWithModelFieldValues({
+    ModelFieldValue<String?>? hodname,
+    ModelFieldValue<String?>? email,
+    ModelFieldValue<ClassRoom?>? classRoom
   }) {
-    return Dean._internal(
+    return Hod._internal(
       id: id,
-      deanname: deanname == null ? this.deanname : deanname.value,
-      email: email == null ? this.email : email.value
+      hodname: hodname == null ? this.hodname : hodname.value,
+      email: email == null ? this.email : email.value,
+      classRoom: classRoom == null ? this.classRoom : classRoom.value
     );
   }
   
-  Dean.fromJson(Map<String, dynamic> json)  
+  Hod.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
-      _deanname = json['deanname'],
+      _hodname = json['hodname'],
       _email = json['email'],
+      _classRoom = json['classRoom'] != null
+        ? json['classRoom']['serializedData'] != null
+          ? ClassRoom.fromJson(new Map<String, dynamic>.from(json['classRoom']['serializedData']))
+          : ClassRoom.fromJson(new Map<String, dynamic>.from(json['classRoom']))
+        : null,
       _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'deanname': _deanname, 'email': _email, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'hodname': _hodname, 'email': _email, 'classRoom': _classRoom?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
     'id': id,
-    'deanname': _deanname,
+    'hodname': _hodname,
     'email': _email,
+    'classRoom': _classRoom,
     'createdAt': _createdAt,
     'updatedAt': _updatedAt
   };
 
-  static final amplify_core.QueryModelIdentifier<DeanModelIdentifier> MODEL_IDENTIFIER = amplify_core.QueryModelIdentifier<DeanModelIdentifier>();
+  static final amplify_core.QueryModelIdentifier<HodModelIdentifier> MODEL_IDENTIFIER = amplify_core.QueryModelIdentifier<HodModelIdentifier>();
   static final ID = amplify_core.QueryField(fieldName: "id");
-  static final DEANNAME = amplify_core.QueryField(fieldName: "deanname");
+  static final HODNAME = amplify_core.QueryField(fieldName: "hodname");
   static final EMAIL = amplify_core.QueryField(fieldName: "email");
+  static final CLASSROOM = amplify_core.QueryField(
+    fieldName: "classRoom",
+    fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'ClassRoom'));
   static var schema = amplify_core.Model.defineSchema(define: (amplify_core.ModelSchemaDefinition modelSchemaDefinition) {
-    modelSchemaDefinition.name = "Dean";
-    modelSchemaDefinition.pluralName = "Deans";
+    modelSchemaDefinition.name = "Hod";
+    modelSchemaDefinition.pluralName = "Hods";
     
     modelSchemaDefinition.authRules = [
       amplify_core.AuthRule(
@@ -163,15 +183,22 @@ class Dean extends amplify_core.Model {
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.id());
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: Dean.DEANNAME,
+      key: Hod.HODNAME,
       isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: Dean.EMAIL,
+      key: Hod.EMAIL,
       isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.belongsTo(
+      key: Hod.CLASSROOM,
+      isRequired: false,
+      targetNames: ['classRoomid'],
+      ofModelName: 'ClassRoom'
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.nonQueryField(
@@ -190,29 +217,29 @@ class Dean extends amplify_core.Model {
   });
 }
 
-class _DeanModelType extends amplify_core.ModelType<Dean> {
-  const _DeanModelType();
+class _HodModelType extends amplify_core.ModelType<Hod> {
+  const _HodModelType();
   
   @override
-  Dean fromJson(Map<String, dynamic> jsonData) {
-    return Dean.fromJson(jsonData);
+  Hod fromJson(Map<String, dynamic> jsonData) {
+    return Hod.fromJson(jsonData);
   }
   
   @override
   String modelName() {
-    return 'Dean';
+    return 'Hod';
   }
 }
 
 /**
  * This is an auto generated class representing the model identifier
- * of [Dean] in your schema.
+ * of [Hod] in your schema.
  */
-class DeanModelIdentifier implements amplify_core.ModelIdentifier<Dean> {
+class HodModelIdentifier implements amplify_core.ModelIdentifier<Hod> {
   final String id;
 
-  /** Create an instance of DeanModelIdentifier using [id] the primary key. */
-  const DeanModelIdentifier({
+  /** Create an instance of HodModelIdentifier using [id] the primary key. */
+  const HodModelIdentifier({
     required this.id});
   
   @override
@@ -230,7 +257,7 @@ class DeanModelIdentifier implements amplify_core.ModelIdentifier<Dean> {
   String serializeAsString() => serializeAsMap().values.join('#');
   
   @override
-  String toString() => 'DeanModelIdentifier(id: $id)';
+  String toString() => 'HodModelIdentifier(id: $id)';
   
   @override
   bool operator ==(Object other) {
@@ -238,7 +265,7 @@ class DeanModelIdentifier implements amplify_core.ModelIdentifier<Dean> {
       return true;
     }
     
-    return other is DeanModelIdentifier &&
+    return other is HodModelIdentifier &&
       id == other.id;
   }
   

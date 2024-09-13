@@ -7,12 +7,14 @@ sealed class GetallState {}
 final class GetallInitial extends GetallState {}
 
 class AllclassesSuccessState extends GetallState {
-final List<Class> classeslist;
+final List<ClassRoom> classroomlist;
   AllclassesSuccessState({
-    required this.classeslist,
+    required this.classroomlist,
   });
 }
 
 class AllclassesfailureState extends GetallState {}
 
 class AllclassesLoadingState extends GetallState {}
+
+class AllclassesEmptyState extends GetallState {}

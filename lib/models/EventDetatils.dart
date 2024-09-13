@@ -34,6 +34,7 @@ class EventDetatils extends amplify_core.Model {
   final String? _date;
   final String? _location;
   final String? _registerurl;
+  final List<Ondutyrequest>? _ondutyrequest;
   final amplify_core.TemporalDateTime? _createdAt;
   final amplify_core.TemporalDateTime? _updatedAt;
 
@@ -74,6 +75,10 @@ class EventDetatils extends amplify_core.Model {
     return _registerurl;
   }
   
+  List<Ondutyrequest>? get ondutyrequest {
+    return _ondutyrequest;
+  }
+  
   amplify_core.TemporalDateTime? get createdAt {
     return _createdAt;
   }
@@ -82,9 +87,9 @@ class EventDetatils extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const EventDetatils._internal({required this.id, images, eventname, eventdetails, date, location, registerurl, createdAt, updatedAt}): _images = images, _eventname = eventname, _eventdetails = eventdetails, _date = date, _location = location, _registerurl = registerurl, _createdAt = createdAt, _updatedAt = updatedAt;
+  const EventDetatils._internal({required this.id, images, eventname, eventdetails, date, location, registerurl, ondutyrequest, createdAt, updatedAt}): _images = images, _eventname = eventname, _eventdetails = eventdetails, _date = date, _location = location, _registerurl = registerurl, _ondutyrequest = ondutyrequest, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory EventDetatils({String? id, List<String>? images, String? eventname, String? eventdetails, String? date, String? location, String? registerurl}) {
+  factory EventDetatils({String? id, List<String>? images, String? eventname, String? eventdetails, String? date, String? location, String? registerurl, List<Ondutyrequest>? ondutyrequest}) {
     return EventDetatils._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       images: images != null ? List<String>.unmodifiable(images) : images,
@@ -92,7 +97,8 @@ class EventDetatils extends amplify_core.Model {
       eventdetails: eventdetails,
       date: date,
       location: location,
-      registerurl: registerurl);
+      registerurl: registerurl,
+      ondutyrequest: ondutyrequest != null ? List<Ondutyrequest>.unmodifiable(ondutyrequest) : ondutyrequest);
   }
   
   bool equals(Object other) {
@@ -109,7 +115,8 @@ class EventDetatils extends amplify_core.Model {
       _eventdetails == other._eventdetails &&
       _date == other._date &&
       _location == other._location &&
-      _registerurl == other._registerurl;
+      _registerurl == other._registerurl &&
+      DeepCollectionEquality().equals(_ondutyrequest, other._ondutyrequest);
   }
   
   @override
@@ -134,7 +141,7 @@ class EventDetatils extends amplify_core.Model {
     return buffer.toString();
   }
   
-  EventDetatils copyWith({List<String>? images, String? eventname, String? eventdetails, String? date, String? location, String? registerurl}) {
+  EventDetatils copyWith({List<String>? images, String? eventname, String? eventdetails, String? date, String? location, String? registerurl, List<Ondutyrequest>? ondutyrequest}) {
     return EventDetatils._internal(
       id: id,
       images: images ?? this.images,
@@ -142,7 +149,8 @@ class EventDetatils extends amplify_core.Model {
       eventdetails: eventdetails ?? this.eventdetails,
       date: date ?? this.date,
       location: location ?? this.location,
-      registerurl: registerurl ?? this.registerurl);
+      registerurl: registerurl ?? this.registerurl,
+      ondutyrequest: ondutyrequest ?? this.ondutyrequest);
   }
   
   EventDetatils copyWithModelFieldValues({
@@ -151,7 +159,8 @@ class EventDetatils extends amplify_core.Model {
     ModelFieldValue<String?>? eventdetails,
     ModelFieldValue<String?>? date,
     ModelFieldValue<String?>? location,
-    ModelFieldValue<String?>? registerurl
+    ModelFieldValue<String?>? registerurl,
+    ModelFieldValue<List<Ondutyrequest>?>? ondutyrequest
   }) {
     return EventDetatils._internal(
       id: id,
@@ -160,7 +169,8 @@ class EventDetatils extends amplify_core.Model {
       eventdetails: eventdetails == null ? this.eventdetails : eventdetails.value,
       date: date == null ? this.date : date.value,
       location: location == null ? this.location : location.value,
-      registerurl: registerurl == null ? this.registerurl : registerurl.value
+      registerurl: registerurl == null ? this.registerurl : registerurl.value,
+      ondutyrequest: ondutyrequest == null ? this.ondutyrequest : ondutyrequest.value
     );
   }
   
@@ -172,11 +182,24 @@ class EventDetatils extends amplify_core.Model {
       _date = json['date'],
       _location = json['location'],
       _registerurl = json['registerurl'],
+      _ondutyrequest = json['ondutyrequest']  is Map
+        ? (json['ondutyrequest']['items'] is List
+          ? (json['ondutyrequest']['items'] as List)
+              .where((e) => e != null)
+              .map((e) => Ondutyrequest.fromJson(new Map<String, dynamic>.from(e)))
+              .toList()
+          : null)
+        : (json['ondutyrequest'] is List
+          ? (json['ondutyrequest'] as List)
+              .where((e) => e?['serializedData'] != null)
+              .map((e) => Ondutyrequest.fromJson(new Map<String, dynamic>.from(e?['serializedData'])))
+              .toList()
+          : null),
       _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'images': _images, 'eventname': _eventname, 'eventdetails': _eventdetails, 'date': _date, 'location': _location, 'registerurl': _registerurl, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'images': _images, 'eventname': _eventname, 'eventdetails': _eventdetails, 'date': _date, 'location': _location, 'registerurl': _registerurl, 'ondutyrequest': _ondutyrequest?.map((Ondutyrequest? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
@@ -187,6 +210,7 @@ class EventDetatils extends amplify_core.Model {
     'date': _date,
     'location': _location,
     'registerurl': _registerurl,
+    'ondutyrequest': _ondutyrequest,
     'createdAt': _createdAt,
     'updatedAt': _updatedAt
   };
@@ -199,6 +223,9 @@ class EventDetatils extends amplify_core.Model {
   static final DATE = amplify_core.QueryField(fieldName: "date");
   static final LOCATION = amplify_core.QueryField(fieldName: "location");
   static final REGISTERURL = amplify_core.QueryField(fieldName: "registerurl");
+  static final ONDUTYREQUEST = amplify_core.QueryField(
+    fieldName: "ondutyrequest",
+    fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'Ondutyrequest'));
   static var schema = amplify_core.Model.defineSchema(define: (amplify_core.ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "EventDetatils";
     modelSchemaDefinition.pluralName = "EventDetatils";
@@ -262,6 +289,13 @@ class EventDetatils extends amplify_core.Model {
       key: EventDetatils.REGISTERURL,
       isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.hasMany(
+      key: EventDetatils.ONDUTYREQUEST,
+      isRequired: false,
+      ofModelName: 'Ondutyrequest',
+      associatedKey: Ondutyrequest.EVENTS
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.nonQueryField(

@@ -10,25 +10,38 @@ Future<void> fetchCurrentUserAttributes() async {
   }
 }
 
-List graphqlresponsehandle(
-    {required GraphQLResponse response, required Function function}) {
+List graphqlresponsehandle({
+  required GraphQLResponse response,
+  required Function function,
+  List? emptyListresponse,
+}) {
   if (response.hasErrors) {
     String error = response.errors[0].message;
     return [500, error];
+  }
+  if (emptyListresponse != null && emptyListresponse.isEmpty) {
+    return [300, null]; 
   } else {
-    return [200, function()];
+    return [
+      200,
+      function()
+    ];
   }
 }
 
-handlebloc(
-    {required int statuscode,
-    required VoidCallback success,
-    required VoidCallback failure}) {
+
+void handlebloc({
+  required int statuscode,
+  required VoidCallback success,
+  required VoidCallback failure,
+  VoidCallback? empty,
+}) {
   if (statuscode == 200) {
     success();
-  }
-  if (statuscode == 500) {
+  } else if (statuscode == 500) {
     failure();
+  } else if (statuscode == 300 && empty != null) {
+    empty();
   }
 }
 
@@ -40,7 +53,6 @@ navigatorpushandremove(BuildContext context, Widget route) {
   Navigator.pushAndRemoveUntil(context,
       MaterialPageRoute(builder: (context) => route), (route) => false);
 }
-
 
 navigationpush(BuildContext context, Widget route) {
   Navigator.push(context, (MaterialPageRoute(builder: (context) => route)));

@@ -23,11 +23,14 @@ import 'ModelProvider.dart';
 import 'package:amplify_core/amplify_core.dart' as amplify_core;
 
 
-/** This is an auto generated class representing the Class type in your schema. */
-class Class extends amplify_core.Model {
-  static const classType = const _ClassModelType();
+/** This is an auto generated class representing the Ondutyrequest type in your schema. */
+class Ondutyrequest extends amplify_core.Model {
+  static const classType = const _OndutyrequestModelType();
   final String id;
-  final String? _classname;
+  final String? _ondutyname;
+  final String? _email;
+  final Student? _student;
+  final EventDetatils? _events;
   final amplify_core.TemporalDateTime? _createdAt;
   final amplify_core.TemporalDateTime? _updatedAt;
 
@@ -38,14 +41,26 @@ class Class extends amplify_core.Model {
   @override
   String getId() => id;
   
-  ClassModelIdentifier get modelIdentifier {
-      return ClassModelIdentifier(
+  OndutyrequestModelIdentifier get modelIdentifier {
+      return OndutyrequestModelIdentifier(
         id: id
       );
   }
   
-  String? get classname {
-    return _classname;
+  String? get ondutyname {
+    return _ondutyname;
+  }
+  
+  String? get email {
+    return _email;
+  }
+  
+  Student? get student {
+    return _student;
+  }
+  
+  EventDetatils? get events {
+    return _events;
   }
   
   amplify_core.TemporalDateTime? get createdAt {
@@ -56,12 +71,15 @@ class Class extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const Class._internal({required this.id, classname, createdAt, updatedAt}): _classname = classname, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Ondutyrequest._internal({required this.id, ondutyname, email, student, events, createdAt, updatedAt}): _ondutyname = ondutyname, _email = email, _student = student, _events = events, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Class({String? id, String? classname}) {
-    return Class._internal(
+  factory Ondutyrequest({String? id, String? ondutyname, String? email, Student? student, EventDetatils? events}) {
+    return Ondutyrequest._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
-      classname: classname);
+      ondutyname: ondutyname,
+      email: email,
+      student: student,
+      events: events);
   }
   
   bool equals(Object other) {
@@ -71,9 +89,12 @@ class Class extends amplify_core.Model {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Class &&
+    return other is Ondutyrequest &&
       id == other.id &&
-      _classname == other._classname;
+      _ondutyname == other._ondutyname &&
+      _email == other._email &&
+      _student == other._student &&
+      _events == other._events;
   }
   
   @override
@@ -83,9 +104,12 @@ class Class extends amplify_core.Model {
   String toString() {
     var buffer = new StringBuffer();
     
-    buffer.write("Class {");
+    buffer.write("Ondutyrequest {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("classname=" + "$_classname" + ", ");
+    buffer.write("ondutyname=" + "$_ondutyname" + ", ");
+    buffer.write("email=" + "$_email" + ", ");
+    buffer.write("student=" + (_student != null ? _student!.toString() : "null") + ", ");
+    buffer.write("events=" + (_events != null ? _events!.toString() : "null") + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
     buffer.write("}");
@@ -93,44 +117,74 @@ class Class extends amplify_core.Model {
     return buffer.toString();
   }
   
-  Class copyWith({String? classname}) {
-    return Class._internal(
+  Ondutyrequest copyWith({String? ondutyname, String? email, Student? student, EventDetatils? events}) {
+    return Ondutyrequest._internal(
       id: id,
-      classname: classname ?? this.classname);
+      ondutyname: ondutyname ?? this.ondutyname,
+      email: email ?? this.email,
+      student: student ?? this.student,
+      events: events ?? this.events);
   }
   
-  Class copyWithModelFieldValues({
-    ModelFieldValue<String?>? classname
+  Ondutyrequest copyWithModelFieldValues({
+    ModelFieldValue<String?>? ondutyname,
+    ModelFieldValue<String?>? email,
+    ModelFieldValue<Student?>? student,
+    ModelFieldValue<EventDetatils?>? events
   }) {
-    return Class._internal(
+    return Ondutyrequest._internal(
       id: id,
-      classname: classname == null ? this.classname : classname.value
+      ondutyname: ondutyname == null ? this.ondutyname : ondutyname.value,
+      email: email == null ? this.email : email.value,
+      student: student == null ? this.student : student.value,
+      events: events == null ? this.events : events.value
     );
   }
   
-  Class.fromJson(Map<String, dynamic> json)  
+  Ondutyrequest.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
-      _classname = json['classname'],
+      _ondutyname = json['ondutyname'],
+      _email = json['email'],
+      _student = json['student'] != null
+        ? json['student']['serializedData'] != null
+          ? Student.fromJson(new Map<String, dynamic>.from(json['student']['serializedData']))
+          : Student.fromJson(new Map<String, dynamic>.from(json['student']))
+        : null,
+      _events = json['events'] != null
+        ? json['events']['serializedData'] != null
+          ? EventDetatils.fromJson(new Map<String, dynamic>.from(json['events']['serializedData']))
+          : EventDetatils.fromJson(new Map<String, dynamic>.from(json['events']))
+        : null,
       _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'classname': _classname, 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'ondutyname': _ondutyname, 'email': _email, 'student': _student?.toJson(), 'events': _events?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
     'id': id,
-    'classname': _classname,
+    'ondutyname': _ondutyname,
+    'email': _email,
+    'student': _student,
+    'events': _events,
     'createdAt': _createdAt,
     'updatedAt': _updatedAt
   };
 
-  static final amplify_core.QueryModelIdentifier<ClassModelIdentifier> MODEL_IDENTIFIER = amplify_core.QueryModelIdentifier<ClassModelIdentifier>();
+  static final amplify_core.QueryModelIdentifier<OndutyrequestModelIdentifier> MODEL_IDENTIFIER = amplify_core.QueryModelIdentifier<OndutyrequestModelIdentifier>();
   static final ID = amplify_core.QueryField(fieldName: "id");
-  static final CLASSNAME = amplify_core.QueryField(fieldName: "classname");
+  static final ONDUTYNAME = amplify_core.QueryField(fieldName: "ondutyname");
+  static final EMAIL = amplify_core.QueryField(fieldName: "email");
+  static final STUDENT = amplify_core.QueryField(
+    fieldName: "student",
+    fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'Student'));
+  static final EVENTS = amplify_core.QueryField(
+    fieldName: "events",
+    fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'EventDetatils'));
   static var schema = amplify_core.Model.defineSchema(define: (amplify_core.ModelSchemaDefinition modelSchemaDefinition) {
-    modelSchemaDefinition.name = "Class";
-    modelSchemaDefinition.pluralName = "Classes";
+    modelSchemaDefinition.name = "Ondutyrequest";
+    modelSchemaDefinition.pluralName = "Ondutyrequests";
     
     modelSchemaDefinition.authRules = [
       amplify_core.AuthRule(
@@ -149,9 +203,29 @@ class Class extends amplify_core.Model {
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.id());
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
-      key: Class.CLASSNAME,
+      key: Ondutyrequest.ONDUTYNAME,
       isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.field(
+      key: Ondutyrequest.EMAIL,
+      isRequired: false,
+      ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.belongsTo(
+      key: Ondutyrequest.STUDENT,
+      isRequired: false,
+      targetNames: ['studentid'],
+      ofModelName: 'Student'
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.belongsTo(
+      key: Ondutyrequest.EVENTS,
+      isRequired: false,
+      targetNames: ['eventid'],
+      ofModelName: 'EventDetatils'
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.nonQueryField(
@@ -170,29 +244,29 @@ class Class extends amplify_core.Model {
   });
 }
 
-class _ClassModelType extends amplify_core.ModelType<Class> {
-  const _ClassModelType();
+class _OndutyrequestModelType extends amplify_core.ModelType<Ondutyrequest> {
+  const _OndutyrequestModelType();
   
   @override
-  Class fromJson(Map<String, dynamic> jsonData) {
-    return Class.fromJson(jsonData);
+  Ondutyrequest fromJson(Map<String, dynamic> jsonData) {
+    return Ondutyrequest.fromJson(jsonData);
   }
   
   @override
   String modelName() {
-    return 'Class';
+    return 'Ondutyrequest';
   }
 }
 
 /**
  * This is an auto generated class representing the model identifier
- * of [Class] in your schema.
+ * of [Ondutyrequest] in your schema.
  */
-class ClassModelIdentifier implements amplify_core.ModelIdentifier<Class> {
+class OndutyrequestModelIdentifier implements amplify_core.ModelIdentifier<Ondutyrequest> {
   final String id;
 
-  /** Create an instance of ClassModelIdentifier using [id] the primary key. */
-  const ClassModelIdentifier({
+  /** Create an instance of OndutyrequestModelIdentifier using [id] the primary key. */
+  const OndutyrequestModelIdentifier({
     required this.id});
   
   @override
@@ -210,7 +284,7 @@ class ClassModelIdentifier implements amplify_core.ModelIdentifier<Class> {
   String serializeAsString() => serializeAsMap().values.join('#');
   
   @override
-  String toString() => 'ClassModelIdentifier(id: $id)';
+  String toString() => 'OndutyrequestModelIdentifier(id: $id)';
   
   @override
   bool operator ==(Object other) {
@@ -218,7 +292,7 @@ class ClassModelIdentifier implements amplify_core.ModelIdentifier<Class> {
       return true;
     }
     
-    return other is ClassModelIdentifier &&
+    return other is OndutyrequestModelIdentifier &&
       id == other.id;
   }
   
