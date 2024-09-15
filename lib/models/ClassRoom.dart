@@ -29,7 +29,7 @@ class ClassRoom extends amplify_core.Model {
   static const classType = const _ClassRoomModelType();
   final String id;
   final String? _classRoomname;
-  final Hod? _dean;
+  final List<Hod>? _hod;
   final List<Ac>? _ac;
   final List<Proctor>? _proctors;
   final List<Student>? _students;
@@ -53,8 +53,8 @@ class ClassRoom extends amplify_core.Model {
     return _classRoomname;
   }
   
-  Hod? get dean {
-    return _dean;
+  List<Hod>? get hod {
+    return _hod;
   }
   
   List<Ac>? get ac {
@@ -77,13 +77,13 @@ class ClassRoom extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const ClassRoom._internal({required this.id, classRoomname, dean, ac, proctors, students, createdAt, updatedAt}): _classRoomname = classRoomname, _dean = dean, _ac = ac, _proctors = proctors, _students = students, _createdAt = createdAt, _updatedAt = updatedAt;
+  const ClassRoom._internal({required this.id, classRoomname, hod, ac, proctors, students, createdAt, updatedAt}): _classRoomname = classRoomname, _hod = hod, _ac = ac, _proctors = proctors, _students = students, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory ClassRoom({String? id, String? classRoomname, Hod? dean, List<Ac>? ac, List<Proctor>? proctors, List<Student>? students}) {
+  factory ClassRoom({String? id, String? classRoomname, List<Hod>? hod, List<Ac>? ac, List<Proctor>? proctors, List<Student>? students}) {
     return ClassRoom._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       classRoomname: classRoomname,
-      dean: dean,
+      hod: hod != null ? List<Hod>.unmodifiable(hod) : hod,
       ac: ac != null ? List<Ac>.unmodifiable(ac) : ac,
       proctors: proctors != null ? List<Proctor>.unmodifiable(proctors) : proctors,
       students: students != null ? List<Student>.unmodifiable(students) : students);
@@ -99,7 +99,7 @@ class ClassRoom extends amplify_core.Model {
     return other is ClassRoom &&
       id == other.id &&
       _classRoomname == other._classRoomname &&
-      _dean == other._dean &&
+      DeepCollectionEquality().equals(_hod, other._hod) &&
       DeepCollectionEquality().equals(_ac, other._ac) &&
       DeepCollectionEquality().equals(_proctors, other._proctors) &&
       DeepCollectionEquality().equals(_students, other._students);
@@ -122,11 +122,11 @@ class ClassRoom extends amplify_core.Model {
     return buffer.toString();
   }
   
-  ClassRoom copyWith({String? classRoomname, Hod? dean, List<Ac>? ac, List<Proctor>? proctors, List<Student>? students}) {
+  ClassRoom copyWith({String? classRoomname, List<Hod>? hod, List<Ac>? ac, List<Proctor>? proctors, List<Student>? students}) {
     return ClassRoom._internal(
       id: id,
       classRoomname: classRoomname ?? this.classRoomname,
-      dean: dean ?? this.dean,
+      hod: hod ?? this.hod,
       ac: ac ?? this.ac,
       proctors: proctors ?? this.proctors,
       students: students ?? this.students);
@@ -134,7 +134,7 @@ class ClassRoom extends amplify_core.Model {
   
   ClassRoom copyWithModelFieldValues({
     ModelFieldValue<String?>? classRoomname,
-    ModelFieldValue<Hod?>? dean,
+    ModelFieldValue<List<Hod>?>? hod,
     ModelFieldValue<List<Ac>?>? ac,
     ModelFieldValue<List<Proctor>?>? proctors,
     ModelFieldValue<List<Student>?>? students
@@ -142,7 +142,7 @@ class ClassRoom extends amplify_core.Model {
     return ClassRoom._internal(
       id: id,
       classRoomname: classRoomname == null ? this.classRoomname : classRoomname.value,
-      dean: dean == null ? this.dean : dean.value,
+      hod: hod == null ? this.hod : hod.value,
       ac: ac == null ? this.ac : ac.value,
       proctors: proctors == null ? this.proctors : proctors.value,
       students: students == null ? this.students : students.value
@@ -152,11 +152,19 @@ class ClassRoom extends amplify_core.Model {
   ClassRoom.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
       _classRoomname = json['classRoomname'],
-      _dean = json['dean'] != null
-        ? json['dean']['serializedData'] != null
-          ? Hod.fromJson(new Map<String, dynamic>.from(json['dean']['serializedData']))
-          : Hod.fromJson(new Map<String, dynamic>.from(json['dean']))
-        : null,
+      _hod = json['hod']  is Map
+        ? (json['hod']['items'] is List
+          ? (json['hod']['items'] as List)
+              .where((e) => e != null)
+              .map((e) => Hod.fromJson(new Map<String, dynamic>.from(e)))
+              .toList()
+          : null)
+        : (json['hod'] is List
+          ? (json['hod'] as List)
+              .where((e) => e?['serializedData'] != null)
+              .map((e) => Hod.fromJson(new Map<String, dynamic>.from(e?['serializedData'])))
+              .toList()
+          : null),
       _ac = json['ac']  is Map
         ? (json['ac']['items'] is List
           ? (json['ac']['items'] as List)
@@ -200,13 +208,13 @@ class ClassRoom extends amplify_core.Model {
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'classRoomname': _classRoomname, 'dean': _dean?.toJson(), 'ac': _ac?.map((Ac? e) => e?.toJson()).toList(), 'proctors': _proctors?.map((Proctor? e) => e?.toJson()).toList(), 'students': _students?.map((Student? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'classRoomname': _classRoomname, 'hod': _hod?.map((Hod? e) => e?.toJson()).toList(), 'ac': _ac?.map((Ac? e) => e?.toJson()).toList(), 'proctors': _proctors?.map((Proctor? e) => e?.toJson()).toList(), 'students': _students?.map((Student? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
     'id': id,
     'classRoomname': _classRoomname,
-    'dean': _dean,
+    'hod': _hod,
     'ac': _ac,
     'proctors': _proctors,
     'students': _students,
@@ -217,8 +225,8 @@ class ClassRoom extends amplify_core.Model {
   static final amplify_core.QueryModelIdentifier<ClassRoomModelIdentifier> MODEL_IDENTIFIER = amplify_core.QueryModelIdentifier<ClassRoomModelIdentifier>();
   static final ID = amplify_core.QueryField(fieldName: "id");
   static final CLASSROOMNAME = amplify_core.QueryField(fieldName: "classRoomname");
-  static final DEAN = amplify_core.QueryField(
-    fieldName: "dean",
+  static final HOD = amplify_core.QueryField(
+    fieldName: "hod",
     fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'Hod'));
   static final AC = amplify_core.QueryField(
     fieldName: "ac",
@@ -255,8 +263,8 @@ class ClassRoom extends amplify_core.Model {
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     
-    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.hasOne(
-      key: ClassRoom.DEAN,
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.hasMany(
+      key: ClassRoom.HOD,
       isRequired: false,
       ofModelName: 'Hod',
       associatedKey: Hod.CLASSROOM

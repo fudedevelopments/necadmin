@@ -1,10 +1,15 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:necadmin/assign_users/ui/user_select_screen.dart';
+import 'package:necadmin/models/ClassRoom.dart';
 import 'package:necadmin/utils.dart';
 
 class AssignUserToClassRoom extends StatefulWidget {
+  final ClassRoom classRoom;
   const AssignUserToClassRoom({
     super.key,
+    required this.classRoom,
   });
 
   @override
@@ -16,15 +21,30 @@ class _AssignUserToClassRoomState extends State<AssignUserToClassRoom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Select user Role'),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFF66BB6A),
+                Color(0xFF43A047),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
-              "Assign User Role ",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+             Text(
+              "Choose User Role for ${widget.classRoom.classRoomname}",
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(
               height: 20,
@@ -65,7 +85,12 @@ class _AssignUserToClassRoomState extends State<AssignUserToClassRoom> {
             ),
             ElevatedButton(
               onPressed: () {
-                navigationpush(context,  UserSelectionScreen(role: _selectedRole,));
+                navigationpush(
+                    context,
+                    UserSelectionScreen(
+                      classRoom: widget.classRoom,
+                      role: _selectedRole,
+                    ));
               },
               style:
                   ElevatedButton.styleFrom(backgroundColor: Colors.lightGreen),

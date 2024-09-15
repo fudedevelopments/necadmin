@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:necadmin/account/account_page.dart';
 import 'package:necadmin/assign_users/ui/assign_users_page.dart';
 import 'package:necadmin/landing_page/landiing_bloc/landing_page_bloc.dart';
 import 'package:necadmin/manageUser/ui/manageusers.dart';
@@ -16,7 +17,7 @@ List<BottomNavigationBarItem> bottomnavItem = [
 List<Widget> bottomnaviScreen = [
   const UserList(),
   const AssignUsersPage(),
-  const Text("Index : 3 favourite"),
+  const AccountPage()
 ];
 
 class LandingPage extends StatelessWidget {

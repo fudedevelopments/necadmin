@@ -70,3 +70,30 @@ Future<String> getimage({required String path}) async {
   final urlstr = url.toString();
   return urlstr;
 }
+
+
+  void showLoadingDialog(BuildContext context) {
+    showDialog(
+      barrierDismissible: false, // Prevent dismissing the dialog by tapping outside
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const CircularProgressIndicator(),
+                SizedBox(height: 20),
+                Text('Loading... Please wait'),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+

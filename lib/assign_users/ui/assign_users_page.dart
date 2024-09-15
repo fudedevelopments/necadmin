@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:necadmin/assign_users/bloc/getall_bloc.dart';
+import 'package:necadmin/assign_users/getallclass/getall_bloc.dart';
 import 'package:necadmin/assign_users/ui/class_details.dart';
 import 'package:necadmin/assign_users/ui/create_class.dart';
 import 'package:necadmin/common/empty_page.dart';
@@ -46,6 +46,7 @@ class _AssignUsersPageState extends State<AssignUsersPage> {
               ),
             ),
           ),
+          
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -102,11 +103,6 @@ class _AssignUsersPageState extends State<AssignUsersPage> {
                                   ),
                                 ),
                                 contentPadding: const EdgeInsets.all(15),
-                                trailing: IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.delete),
-                                  color: Colors.redAccent,
-                                ),
                               ),
                             ),
                           );

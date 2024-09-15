@@ -1,11 +1,7 @@
-import 'package:amplify_api/amplify_api.dart';
-import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:necadmin/assign_users/assignbloc/assign_bloc.dart';
-import 'package:necadmin/assign_users/ui/assign_users_page.dart';
 import 'package:necadmin/landing_page/ui/landing_page.dart';
-import 'package:necadmin/models/ModelProvider.dart';
 import 'package:necadmin/utils.dart';
 
 class CreateClassScreen extends StatefulWidget {
