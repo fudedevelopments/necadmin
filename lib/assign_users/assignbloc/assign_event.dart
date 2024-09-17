@@ -37,3 +37,12 @@ class DeleteClassRoom extends AssignEvent {
     required this.classRoom,
   });
 }
+
+class AssignStudentsInProctor extends AssignEvent {
+  final Proctor proctor;
+  final List<Student> students;
+  AssignStudentsInProctor({
+    required this.proctor,
+    required this.students,
+  });
+}

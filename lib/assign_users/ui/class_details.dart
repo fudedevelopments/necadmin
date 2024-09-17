@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:necadmin/assign_users/assignbloc/assign_bloc.dart';
-import 'package:necadmin/assign_users/bloc/classroom_bloc.dart';
+import 'package:necadmin/assign_users/classroom/classroom_bloc.dart';
 import 'package:necadmin/assign_users/ui/assign_role_user.dart';
+import 'package:necadmin/assign_users/ui/students/all_students_in_the_classroom.dart';
+import 'package:necadmin/assign_users/ui/students/proctor_students.dart';
 import 'package:necadmin/common/error_unknown.dart';
 import 'package:necadmin/common/errorscreen.dart';
 import 'package:necadmin/landing_page/ui/landing_page.dart';
@@ -267,87 +269,120 @@ class _ClassDetailsState extends State<ClassDetails> {
                       )
                     else
                       ...state.proctorlist.map((proctor) {
-                        return Container(
-                          margin: const EdgeInsets.symmetric(vertical: 5),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Colors.green[100]!, Colors.green[300]!],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 5,
-                                offset: Offset(2, 2),
+                        return GestureDetector(
+                          onTap: () {
+                            navigationpush(
+                                context, StudentsIntheProctor(
+                                  students: state.studentlist,
+                                  proctor: proctor,
+                                ));
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 5),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.green[100]!,
+                                  Colors.green[300]!
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
                               ),
-                            ],
-                          ),
-                          child: ListTile(
-                            title: Text(
-                              proctor.email!,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 5,
+                                  offset: Offset(2, 2),
+                                ),
+                              ],
                             ),
-                            leading:
-                                const Icon(Icons.security, color: Colors.green),
-                            trailing: IconButton(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Text('Confirm Deletion'),
-                                      content: const Text(
-                                          'Are you sure you want to delete this item?'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const Text('Cancel'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                            BlocProvider.of<AssignBloc>(context)
-                                                .add(DeleteClassRoomUser(
-                                                    userid: proctor.id,
-                                                    role: "PROCTOR"));
-                                          },
-                                          child: const Text(
-                                            'Delete',
-                                            style: TextStyle(color: Colors.red),
+                            child: ListTile(
+                              title: Text(
+                                proctor.email!,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              leading: const Icon(Icons.security,
+                                  color: Colors.green),
+                              trailing: IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Confirm Deletion'),
+                                        content: const Text(
+                                            'Are you sure you want to delete this item?'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Cancel'),
                                           ),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                              icon: const Icon(Icons.delete),
-                              color: Colors.red,
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                              BlocProvider.of<AssignBloc>(
+                                                      context)
+                                                  .add(DeleteClassRoomUser(
+                                                      userid: proctor.id,
+                                                      role: "PROCTOR"));
+                                            },
+                                            child: const Text(
+                                              'Delete',
+                                              style:
+                                                  TextStyle(color: Colors.red),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                icon: const Icon(Icons.delete),
+                                color: Colors.red,
+                              ),
                             ),
                           ),
                         );
                       }),
                     const SizedBox(
-                      height: 30,
+                      height: 40,
+                    ),
+                    //All students button
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          navigationpush(
+                              context, AllStudentsInTheClassroom(classRoom: widget.classRoom,
+                              students: state.studentlist,
+                              ));
+                        },
+                        icon: const Icon(Icons.school, color: Colors.white),
+                        label: const Text('Go to Students Page'),
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.orange,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
+                          textStyle: const TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
                     ),
                     const Divider(),
-                    const SizedBox(
-                      height: 30,
-                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: ElevatedButton(
                         onPressed: () {
-                          // Check if there are any users in the class (HODs, ACs, or Proctors)
                           if (state.hodlist.isNotEmpty ||
                               state.aclist.isNotEmpty ||
                               state.proctorlist.isNotEmpty) {
-                            // Show a dialog box prompting the user to delete all users first
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -409,7 +444,7 @@ class _ClassDetailsState extends State<ClassDetails> {
                         ),
                         child: const Text("Delete Class"),
                       ),
-                    )
+                    ),
                   ],
                 );
               }

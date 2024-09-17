@@ -30,8 +30,8 @@ class Proctor extends amplify_core.Model {
   final String id;
   final String? _proctorname;
   final String? _email;
-  final List<Student>? _students;
   final ClassRoom? _classRoom;
+  final List<Student>? _students;
   final amplify_core.TemporalDateTime? _createdAt;
   final amplify_core.TemporalDateTime? _updatedAt;
 
@@ -56,12 +56,12 @@ class Proctor extends amplify_core.Model {
     return _email;
   }
   
-  List<Student>? get students {
-    return _students;
-  }
-  
   ClassRoom? get classRoom {
     return _classRoom;
+  }
+  
+  List<Student>? get students {
+    return _students;
   }
   
   amplify_core.TemporalDateTime? get createdAt {
@@ -72,15 +72,15 @@ class Proctor extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const Proctor._internal({required this.id, proctorname, email, students, classRoom, createdAt, updatedAt}): _proctorname = proctorname, _email = email, _students = students, _classRoom = classRoom, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Proctor._internal({required this.id, proctorname, email, classRoom, students, createdAt, updatedAt}): _proctorname = proctorname, _email = email, _classRoom = classRoom, _students = students, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Proctor({String? id, String? proctorname, String? email, List<Student>? students, ClassRoom? classRoom}) {
+  factory Proctor({String? id, String? proctorname, String? email, ClassRoom? classRoom, List<Student>? students}) {
     return Proctor._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       proctorname: proctorname,
       email: email,
-      students: students != null ? List<Student>.unmodifiable(students) : students,
-      classRoom: classRoom);
+      classRoom: classRoom,
+      students: students != null ? List<Student>.unmodifiable(students) : students);
   }
   
   bool equals(Object other) {
@@ -94,8 +94,8 @@ class Proctor extends amplify_core.Model {
       id == other.id &&
       _proctorname == other._proctorname &&
       _email == other._email &&
-      DeepCollectionEquality().equals(_students, other._students) &&
-      _classRoom == other._classRoom;
+      _classRoom == other._classRoom &&
+      DeepCollectionEquality().equals(_students, other._students);
   }
   
   @override
@@ -117,27 +117,27 @@ class Proctor extends amplify_core.Model {
     return buffer.toString();
   }
   
-  Proctor copyWith({String? proctorname, String? email, List<Student>? students, ClassRoom? classRoom}) {
+  Proctor copyWith({String? proctorname, String? email, ClassRoom? classRoom, List<Student>? students}) {
     return Proctor._internal(
       id: id,
       proctorname: proctorname ?? this.proctorname,
       email: email ?? this.email,
-      students: students ?? this.students,
-      classRoom: classRoom ?? this.classRoom);
+      classRoom: classRoom ?? this.classRoom,
+      students: students ?? this.students);
   }
   
   Proctor copyWithModelFieldValues({
     ModelFieldValue<String?>? proctorname,
     ModelFieldValue<String?>? email,
-    ModelFieldValue<List<Student>?>? students,
-    ModelFieldValue<ClassRoom?>? classRoom
+    ModelFieldValue<ClassRoom?>? classRoom,
+    ModelFieldValue<List<Student>?>? students
   }) {
     return Proctor._internal(
       id: id,
       proctorname: proctorname == null ? this.proctorname : proctorname.value,
       email: email == null ? this.email : email.value,
-      students: students == null ? this.students : students.value,
-      classRoom: classRoom == null ? this.classRoom : classRoom.value
+      classRoom: classRoom == null ? this.classRoom : classRoom.value,
+      students: students == null ? this.students : students.value
     );
   }
   
@@ -145,6 +145,11 @@ class Proctor extends amplify_core.Model {
     : id = json['id'],
       _proctorname = json['proctorname'],
       _email = json['email'],
+      _classRoom = json['classRoom'] != null
+        ? json['classRoom']['serializedData'] != null
+          ? ClassRoom.fromJson(new Map<String, dynamic>.from(json['classRoom']['serializedData']))
+          : ClassRoom.fromJson(new Map<String, dynamic>.from(json['classRoom']))
+        : null,
       _students = json['students']  is Map
         ? (json['students']['items'] is List
           ? (json['students']['items'] as List)
@@ -158,24 +163,19 @@ class Proctor extends amplify_core.Model {
               .map((e) => Student.fromJson(new Map<String, dynamic>.from(e?['serializedData'])))
               .toList()
           : null),
-      _classRoom = json['classRoom'] != null
-        ? json['classRoom']['serializedData'] != null
-          ? ClassRoom.fromJson(new Map<String, dynamic>.from(json['classRoom']['serializedData']))
-          : ClassRoom.fromJson(new Map<String, dynamic>.from(json['classRoom']))
-        : null,
       _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'proctorname': _proctorname, 'email': _email, 'students': _students?.map((Student? e) => e?.toJson()).toList(), 'classRoom': _classRoom?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'proctorname': _proctorname, 'email': _email, 'classRoom': _classRoom?.toJson(), 'students': _students?.map((Student? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
     'id': id,
     'proctorname': _proctorname,
     'email': _email,
-    'students': _students,
     'classRoom': _classRoom,
+    'students': _students,
     'createdAt': _createdAt,
     'updatedAt': _updatedAt
   };
@@ -184,12 +184,12 @@ class Proctor extends amplify_core.Model {
   static final ID = amplify_core.QueryField(fieldName: "id");
   static final PROCTORNAME = amplify_core.QueryField(fieldName: "proctorname");
   static final EMAIL = amplify_core.QueryField(fieldName: "email");
-  static final STUDENTS = amplify_core.QueryField(
-    fieldName: "students",
-    fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'Student'));
   static final CLASSROOM = amplify_core.QueryField(
     fieldName: "classRoom",
     fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'ClassRoom'));
+  static final STUDENTS = amplify_core.QueryField(
+    fieldName: "students",
+    fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'Student'));
   static var schema = amplify_core.Model.defineSchema(define: (amplify_core.ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Proctor";
     modelSchemaDefinition.pluralName = "Proctors";
@@ -222,18 +222,18 @@ class Proctor extends amplify_core.Model {
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
     ));
     
-    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.hasMany(
-      key: Proctor.STUDENTS,
-      isRequired: false,
-      ofModelName: 'Student',
-      associatedKey: Student.PROCTOR
-    ));
-    
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.belongsTo(
       key: Proctor.CLASSROOM,
       isRequired: false,
       targetNames: ['classRoomid'],
       ofModelName: 'ClassRoom'
+    ));
+    
+    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.hasMany(
+      key: Proctor.STUDENTS,
+      isRequired: false,
+      ofModelName: 'Student',
+      associatedKey: Student.PROCTOR
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.nonQueryField(

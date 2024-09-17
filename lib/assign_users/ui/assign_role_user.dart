@@ -67,7 +67,7 @@ class _AssignUserToClassRoomState extends State<AssignUserToClassRoom> {
                 ),
               ),
               dropdownColor: Colors.teal.shade50,
-              items: ['STUDENTS', 'HOD', 'ACADEMIC COORDINATOR', 'PROCTOR']
+              items: ['HOD', 'ACADEMIC COORDINATOR', 'PROCTOR']
                   .map((String role) {
                 return DropdownMenuItem<String>(
                   value: role,

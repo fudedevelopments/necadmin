@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:necadmin/assign_users/repo/assign_repo.dart';
 import 'package:necadmin/models/ClassRoom.dart';
+import 'package:necadmin/models/ModelProvider.dart';
 import 'package:necadmin/utils.dart';
 
 part 'assign_event.dart';
@@ -16,6 +17,7 @@ class AssignBloc extends Bloc<AssignEvent, AssignState> {
     on<AddUserToClassRoomEvent>(addUserToClassRoomEvent);
     on<DeleteClassRoomUser>(deleteClassRoomUser);
     on<DeleteClassRoom>(deleteClassRooms);
+    on<AssignStudentsInProctor>(assignStudentsInProctor);
   }
 
   FutureOr<void> createclassevent(
@@ -67,5 +69,13 @@ class AssignBloc extends Bloc<AssignEvent, AssignState> {
         failure: () {
           emit(DeleteClassRoomfailureState());
         });
+  }
+
+  FutureOr<void> assignStudentsInProctor(
+      AssignStudentsInProctor event, Emitter<AssignState> emit) async {
+    emit(AddStudentsUnderProctorloadingtate());
+    List<bool> res = await addStudentundertheproctorfunction(
+        students: event.students, proctor: event.proctor);
+    emit(AddStudentsUnderProctorSuccessState(results: res));
   }
 }

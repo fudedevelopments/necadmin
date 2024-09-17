@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:necadmin/assign_users/assignbloc/assign_bloc.dart';
-import 'package:necadmin/assign_users/bloc/classroom_bloc.dart';
+import 'package:necadmin/assign_users/bloc/proctor_bloc.dart';
+import 'package:necadmin/assign_users/classroom/classroom_bloc.dart';
 import 'package:necadmin/assign_users/getallclass/getall_bloc.dart';
 import 'package:necadmin/landing_page/landiing_bloc/landing_page_bloc.dart';
 import 'package:necadmin/landing_page/ui/landing_page.dart';
@@ -53,6 +54,9 @@ Future<void> main() async {
         ),
         BlocProvider(
           create: (context) => ClassroomBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ProctorBloc(),
         ),
 
       ],

@@ -13,7 +13,7 @@ class CreateClassfailureState extends AssignState {}
 class CreateClassloadingState extends AssignState {}
 
 class AssignUserSuccessState extends AssignState {
- final List<bool> result;
+  final List<bool> result;
   AssignUserSuccessState({
     required this.result,
   });
@@ -23,14 +23,23 @@ class AssignUserLoadingState extends AssignState {}
 
 class AssignUserFailureState extends AssignState {}
 
-
-class DeleteUserSucessState extends AssignState{}
+class DeleteUserSucessState extends AssignState {}
 
 class DeleteUserFailureState extends AssignState {}
 
 class DeleteUserLoadingState extends AssignState {}
 
+class DeleteClassRoomSuccessState extends AssignState {}
 
-class DeleteClassRoomSuccessState extends AssignState{}
 class DeleteClassRoomfailureState extends AssignState {}
+
 class DeleteClassRoomloadingState extends AssignState {}
+
+class AddStudentsUnderProctorSuccessState extends AssignState {
+  final List<bool> results;
+  AddStudentsUnderProctorSuccessState({
+    required this.results,
+  });
+}
+
+class AddStudentsUnderProctorloadingtate extends AssignState {}

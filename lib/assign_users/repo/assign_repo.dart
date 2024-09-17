@@ -36,10 +36,11 @@ getAllClasses() async {
   return res;
 }
 
-addUserToClassroom(
-    {required ClassRoom classRoom,
-    required String role,
-    required List user}) async {
+addUserToClassroom({
+  required ClassRoom classRoom,
+  required String role,
+  required List user,
+}) async {
   List<bool> result = [];
 
   if (role == "HOD") {
@@ -93,6 +94,7 @@ addUserToClassroom(
       final studentrequest = ModelMutations.create(student);
       final studentResponse =
           await Amplify.API.mutate(request: studentrequest).response;
+      safePrint(studentResponse);
       if (studentResponse.hasErrors) {
         result.add(false);
       } else {
@@ -198,5 +200,41 @@ deleteClassRoom({required ClassRoom classroom}) async {
   final deleteClassRoom = ModelMutations.delete(classroom);
   final response = await Amplify.API.mutate(request: deleteClassRoom).response;
   List res = graphqlresponsehandle(response: response, function: () {});
+  return res;
+}
+
+addStudentundertheproctorfunction(
+    {required List<Student> students, required Proctor proctor}) async {
+  List<bool> result = [];
+  for (int i = 0; i < students.length; i++) {
+    final proctoraddstudents = students[i].copyWith(proctor: proctor);
+    final request = ModelMutations.update(proctoraddstudents);
+    final response = await Amplify.API.mutate(request: request).response;
+    if (response.hasErrors) {
+      result.add(false);
+    } else {
+      result.add(true);
+    }
+  }
+  return result;
+}
+
+getallStudentsByProctor({required Proctor proctor}) async {
+  final request = ModelQueries.list<Student>(Student.classType,
+      where: Student.PROCTOR.eq(proctor.id));
+  final response = await Amplify.API.query(request: request).response;
+  List<Student?>? students = response.data?.items;
+  List res = graphqlresponsehandle(
+    emptyListresponse: students,
+      response: response,
+      function: () {
+        List<Student> studentsList = [];
+        if (students != null) {
+          for (int i = 0; i < students.length; i++) {
+            studentsList.add(students[i]!);
+          }
+        }
+        return studentsList;
+      });
   return res;
 }

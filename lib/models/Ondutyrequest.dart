@@ -29,7 +29,6 @@ class Ondutyrequest extends amplify_core.Model {
   final String id;
   final String? _ondutyname;
   final String? _email;
-  final Student? _student;
   final EventDetatils? _events;
   final amplify_core.TemporalDateTime? _createdAt;
   final amplify_core.TemporalDateTime? _updatedAt;
@@ -55,10 +54,6 @@ class Ondutyrequest extends amplify_core.Model {
     return _email;
   }
   
-  Student? get student {
-    return _student;
-  }
-  
   EventDetatils? get events {
     return _events;
   }
@@ -71,14 +66,13 @@ class Ondutyrequest extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const Ondutyrequest._internal({required this.id, ondutyname, email, student, events, createdAt, updatedAt}): _ondutyname = ondutyname, _email = email, _student = student, _events = events, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Ondutyrequest._internal({required this.id, ondutyname, email, events, createdAt, updatedAt}): _ondutyname = ondutyname, _email = email, _events = events, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Ondutyrequest({String? id, String? ondutyname, String? email, Student? student, EventDetatils? events}) {
+  factory Ondutyrequest({String? id, String? ondutyname, String? email, EventDetatils? events}) {
     return Ondutyrequest._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       ondutyname: ondutyname,
       email: email,
-      student: student,
       events: events);
   }
   
@@ -93,7 +87,6 @@ class Ondutyrequest extends amplify_core.Model {
       id == other.id &&
       _ondutyname == other._ondutyname &&
       _email == other._email &&
-      _student == other._student &&
       _events == other._events;
   }
   
@@ -108,7 +101,6 @@ class Ondutyrequest extends amplify_core.Model {
     buffer.write("id=" + "$id" + ", ");
     buffer.write("ondutyname=" + "$_ondutyname" + ", ");
     buffer.write("email=" + "$_email" + ", ");
-    buffer.write("student=" + (_student != null ? _student!.toString() : "null") + ", ");
     buffer.write("events=" + (_events != null ? _events!.toString() : "null") + ", ");
     buffer.write("createdAt=" + (_createdAt != null ? _createdAt!.format() : "null") + ", ");
     buffer.write("updatedAt=" + (_updatedAt != null ? _updatedAt!.format() : "null"));
@@ -117,26 +109,23 @@ class Ondutyrequest extends amplify_core.Model {
     return buffer.toString();
   }
   
-  Ondutyrequest copyWith({String? ondutyname, String? email, Student? student, EventDetatils? events}) {
+  Ondutyrequest copyWith({String? ondutyname, String? email, EventDetatils? events}) {
     return Ondutyrequest._internal(
       id: id,
       ondutyname: ondutyname ?? this.ondutyname,
       email: email ?? this.email,
-      student: student ?? this.student,
       events: events ?? this.events);
   }
   
   Ondutyrequest copyWithModelFieldValues({
     ModelFieldValue<String?>? ondutyname,
     ModelFieldValue<String?>? email,
-    ModelFieldValue<Student?>? student,
     ModelFieldValue<EventDetatils?>? events
   }) {
     return Ondutyrequest._internal(
       id: id,
       ondutyname: ondutyname == null ? this.ondutyname : ondutyname.value,
       email: email == null ? this.email : email.value,
-      student: student == null ? this.student : student.value,
       events: events == null ? this.events : events.value
     );
   }
@@ -145,11 +134,6 @@ class Ondutyrequest extends amplify_core.Model {
     : id = json['id'],
       _ondutyname = json['ondutyname'],
       _email = json['email'],
-      _student = json['student'] != null
-        ? json['student']['serializedData'] != null
-          ? Student.fromJson(new Map<String, dynamic>.from(json['student']['serializedData']))
-          : Student.fromJson(new Map<String, dynamic>.from(json['student']))
-        : null,
       _events = json['events'] != null
         ? json['events']['serializedData'] != null
           ? EventDetatils.fromJson(new Map<String, dynamic>.from(json['events']['serializedData']))
@@ -159,14 +143,13 @@ class Ondutyrequest extends amplify_core.Model {
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'ondutyname': _ondutyname, 'email': _email, 'student': _student?.toJson(), 'events': _events?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'ondutyname': _ondutyname, 'email': _email, 'events': _events?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
     'id': id,
     'ondutyname': _ondutyname,
     'email': _email,
-    'student': _student,
     'events': _events,
     'createdAt': _createdAt,
     'updatedAt': _updatedAt
@@ -176,9 +159,6 @@ class Ondutyrequest extends amplify_core.Model {
   static final ID = amplify_core.QueryField(fieldName: "id");
   static final ONDUTYNAME = amplify_core.QueryField(fieldName: "ondutyname");
   static final EMAIL = amplify_core.QueryField(fieldName: "email");
-  static final STUDENT = amplify_core.QueryField(
-    fieldName: "student",
-    fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'Student'));
   static final EVENTS = amplify_core.QueryField(
     fieldName: "events",
     fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'EventDetatils'));
@@ -212,13 +192,6 @@ class Ondutyrequest extends amplify_core.Model {
       key: Ondutyrequest.EMAIL,
       isRequired: false,
       ofType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.string)
-    ));
-    
-    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.belongsTo(
-      key: Ondutyrequest.STUDENT,
-      isRequired: false,
-      targetNames: ['studentid'],
-      ofModelName: 'Student'
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.belongsTo(

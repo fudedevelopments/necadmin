@@ -184,20 +184,20 @@ const amplifyConfig = '''{
               "isRequired": false,
               "attributes": []
             },
-            "dean": {
-              "name": "dean",
-              "isArray": false,
+            "hod": {
+              "name": "hod",
+              "isArray": true,
               "type": {
                 "model": "Hod"
               },
               "isRequired": false,
               "attributes": [],
+              "isArrayNullable": true,
               "association": {
-                "connectionType": "HAS_ONE",
+                "connectionType": "HAS_MANY",
                 "associatedWith": [
                   "classRoomid"
-                ],
-                "targetNames": []
+                ]
               }
             },
             "ac": {
@@ -523,22 +523,6 @@ const amplifyConfig = '''{
               "isRequired": false,
               "attributes": []
             },
-            "students": {
-              "name": "students",
-              "isArray": true,
-              "type": {
-                "model": "Student"
-              },
-              "isRequired": false,
-              "attributes": [],
-              "isArrayNullable": true,
-              "association": {
-                "connectionType": "HAS_MANY",
-                "associatedWith": [
-                  "proctorid"
-                ]
-              }
-            },
             "classRoomid": {
               "name": "classRoomid",
               "isArray": false,
@@ -558,6 +542,22 @@ const amplifyConfig = '''{
                 "connectionType": "BELONGS_TO",
                 "targetNames": [
                   "classRoomid"
+                ]
+              }
+            },
+            "students": {
+              "name": "students",
+              "isArray": true,
+              "type": {
+                "model": "Student"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true,
+              "association": {
+                "connectionType": "HAS_MANY",
+                "associatedWith": [
+                  "proctorid"
                 ]
               }
             },
@@ -682,22 +682,6 @@ const amplifyConfig = '''{
                 ]
               }
             },
-            "ondutyrequest": {
-              "name": "ondutyrequest",
-              "isArray": true,
-              "type": {
-                "model": "Ondutyrequest"
-              },
-              "isRequired": false,
-              "attributes": [],
-              "isArrayNullable": true,
-              "association": {
-                "connectionType": "HAS_MANY",
-                "associatedWith": [
-                  "studentid"
-                ]
-              }
-            },
             "createdAt": {
               "name": "createdAt",
               "isArray": false,
@@ -732,8 +716,7 @@ const amplifyConfig = '''{
                     "allow": "groups",
                     "groups": [
                       "ADMINS",
-                      "STAFF",
-                      "STUDENTS"
+                      "STAFF"
                     ],
                     "operations": [
                       "create",
@@ -775,28 +758,6 @@ const amplifyConfig = '''{
               "type": "AWSEmail",
               "isRequired": false,
               "attributes": []
-            },
-            "studentid": {
-              "name": "studentid",
-              "isArray": false,
-              "type": "ID",
-              "isRequired": false,
-              "attributes": []
-            },
-            "student": {
-              "name": "student",
-              "isArray": false,
-              "type": {
-                "model": "Student"
-              },
-              "isRequired": false,
-              "attributes": [],
-              "association": {
-                "connectionType": "BELONGS_TO",
-                "targetNames": [
-                  "studentid"
-                ]
-              }
             },
             "eventid": {
               "name": "eventid",

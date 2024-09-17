@@ -21,7 +21,6 @@
 
 import 'ModelProvider.dart';
 import 'package:amplify_core/amplify_core.dart' as amplify_core;
-import 'package:collection/collection.dart';
 
 
 /** This is an auto generated class representing the Student type in your schema. */
@@ -32,7 +31,6 @@ class Student extends amplify_core.Model {
   final String? _email;
   final ClassRoom? _classRoom;
   final Proctor? _proctor;
-  final List<Ondutyrequest>? _ondutyrequest;
   final amplify_core.TemporalDateTime? _createdAt;
   final amplify_core.TemporalDateTime? _updatedAt;
 
@@ -65,10 +63,6 @@ class Student extends amplify_core.Model {
     return _proctor;
   }
   
-  List<Ondutyrequest>? get ondutyrequest {
-    return _ondutyrequest;
-  }
-  
   amplify_core.TemporalDateTime? get createdAt {
     return _createdAt;
   }
@@ -77,16 +71,15 @@ class Student extends amplify_core.Model {
     return _updatedAt;
   }
   
-  const Student._internal({required this.id, studentname, email, classRoom, proctor, ondutyrequest, createdAt, updatedAt}): _studentname = studentname, _email = email, _classRoom = classRoom, _proctor = proctor, _ondutyrequest = ondutyrequest, _createdAt = createdAt, _updatedAt = updatedAt;
+  const Student._internal({required this.id, studentname, email, classRoom, proctor, createdAt, updatedAt}): _studentname = studentname, _email = email, _classRoom = classRoom, _proctor = proctor, _createdAt = createdAt, _updatedAt = updatedAt;
   
-  factory Student({String? id, String? studentname, String? email, ClassRoom? classRoom, Proctor? proctor, List<Ondutyrequest>? ondutyrequest}) {
+  factory Student({String? id, String? studentname, String? email, ClassRoom? classRoom, Proctor? proctor}) {
     return Student._internal(
       id: id == null ? amplify_core.UUID.getUUID() : id,
       studentname: studentname,
       email: email,
       classRoom: classRoom,
-      proctor: proctor,
-      ondutyrequest: ondutyrequest != null ? List<Ondutyrequest>.unmodifiable(ondutyrequest) : ondutyrequest);
+      proctor: proctor);
   }
   
   bool equals(Object other) {
@@ -101,8 +94,7 @@ class Student extends amplify_core.Model {
       _studentname == other._studentname &&
       _email == other._email &&
       _classRoom == other._classRoom &&
-      _proctor == other._proctor &&
-      DeepCollectionEquality().equals(_ondutyrequest, other._ondutyrequest);
+      _proctor == other._proctor;
   }
   
   @override
@@ -125,30 +117,27 @@ class Student extends amplify_core.Model {
     return buffer.toString();
   }
   
-  Student copyWith({String? studentname, String? email, ClassRoom? classRoom, Proctor? proctor, List<Ondutyrequest>? ondutyrequest}) {
+  Student copyWith({String? studentname, String? email, ClassRoom? classRoom, Proctor? proctor}) {
     return Student._internal(
       id: id,
       studentname: studentname ?? this.studentname,
       email: email ?? this.email,
       classRoom: classRoom ?? this.classRoom,
-      proctor: proctor ?? this.proctor,
-      ondutyrequest: ondutyrequest ?? this.ondutyrequest);
+      proctor: proctor ?? this.proctor);
   }
   
   Student copyWithModelFieldValues({
     ModelFieldValue<String?>? studentname,
     ModelFieldValue<String?>? email,
     ModelFieldValue<ClassRoom?>? classRoom,
-    ModelFieldValue<Proctor?>? proctor,
-    ModelFieldValue<List<Ondutyrequest>?>? ondutyrequest
+    ModelFieldValue<Proctor?>? proctor
   }) {
     return Student._internal(
       id: id,
       studentname: studentname == null ? this.studentname : studentname.value,
       email: email == null ? this.email : email.value,
       classRoom: classRoom == null ? this.classRoom : classRoom.value,
-      proctor: proctor == null ? this.proctor : proctor.value,
-      ondutyrequest: ondutyrequest == null ? this.ondutyrequest : ondutyrequest.value
+      proctor: proctor == null ? this.proctor : proctor.value
     );
   }
   
@@ -166,24 +155,11 @@ class Student extends amplify_core.Model {
           ? Proctor.fromJson(new Map<String, dynamic>.from(json['proctor']['serializedData']))
           : Proctor.fromJson(new Map<String, dynamic>.from(json['proctor']))
         : null,
-      _ondutyrequest = json['ondutyrequest']  is Map
-        ? (json['ondutyrequest']['items'] is List
-          ? (json['ondutyrequest']['items'] as List)
-              .where((e) => e != null)
-              .map((e) => Ondutyrequest.fromJson(new Map<String, dynamic>.from(e)))
-              .toList()
-          : null)
-        : (json['ondutyrequest'] is List
-          ? (json['ondutyrequest'] as List)
-              .where((e) => e?['serializedData'] != null)
-              .map((e) => Ondutyrequest.fromJson(new Map<String, dynamic>.from(e?['serializedData'])))
-              .toList()
-          : null),
       _createdAt = json['createdAt'] != null ? amplify_core.TemporalDateTime.fromString(json['createdAt']) : null,
       _updatedAt = json['updatedAt'] != null ? amplify_core.TemporalDateTime.fromString(json['updatedAt']) : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'studentname': _studentname, 'email': _email, 'classRoom': _classRoom?.toJson(), 'proctor': _proctor?.toJson(), 'ondutyrequest': _ondutyrequest?.map((Ondutyrequest? e) => e?.toJson()).toList(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
+    'id': id, 'studentname': _studentname, 'email': _email, 'classRoom': _classRoom?.toJson(), 'proctor': _proctor?.toJson(), 'createdAt': _createdAt?.format(), 'updatedAt': _updatedAt?.format()
   };
   
   Map<String, Object?> toMap() => {
@@ -192,7 +168,6 @@ class Student extends amplify_core.Model {
     'email': _email,
     'classRoom': _classRoom,
     'proctor': _proctor,
-    'ondutyrequest': _ondutyrequest,
     'createdAt': _createdAt,
     'updatedAt': _updatedAt
   };
@@ -207,9 +182,6 @@ class Student extends amplify_core.Model {
   static final PROCTOR = amplify_core.QueryField(
     fieldName: "proctor",
     fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'Proctor'));
-  static final ONDUTYREQUEST = amplify_core.QueryField(
-    fieldName: "ondutyrequest",
-    fieldType: amplify_core.ModelFieldType(amplify_core.ModelFieldTypeEnum.model, ofModelName: 'Ondutyrequest'));
   static var schema = amplify_core.Model.defineSchema(define: (amplify_core.ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Student";
     modelSchemaDefinition.pluralName = "Students";
@@ -218,7 +190,7 @@ class Student extends amplify_core.Model {
       amplify_core.AuthRule(
         authStrategy: amplify_core.AuthStrategy.GROUPS,
         groupClaim: "cognito:groups",
-        groups: [ "ADMINS", "STAFF", "STUDENTS" ],
+        groups: [ "ADMINS", "STAFF" ],
         provider: amplify_core.AuthRuleProvider.USERPOOLS,
         operations: const [
           amplify_core.ModelOperation.CREATE,
@@ -254,13 +226,6 @@ class Student extends amplify_core.Model {
       isRequired: false,
       targetNames: ['proctorid'],
       ofModelName: 'Proctor'
-    ));
-    
-    modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.hasMany(
-      key: Student.ONDUTYREQUEST,
-      isRequired: false,
-      ofModelName: 'Ondutyrequest',
-      associatedKey: Ondutyrequest.STUDENT
     ));
     
     modelSchemaDefinition.addField(amplify_core.ModelFieldDefinition.nonQueryField(
