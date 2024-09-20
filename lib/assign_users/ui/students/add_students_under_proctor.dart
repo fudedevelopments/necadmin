@@ -111,7 +111,7 @@ class _AddStudentsUnderProctorState extends State<AddStudentsUnderProctor> {
             }
           },
           builder: (context, state) {
-            if (state is AddStudentsUnderProctorSuccessState) {
+            if (state is AddStudentsUnderProctorloadingtate) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
@@ -120,7 +120,7 @@ class _AddStudentsUnderProctorState extends State<AddStudentsUnderProctor> {
                 onPressed: () {
                   BlocProvider.of<AssignBloc>(context).add(
                       
-                    AssignStudentsInProctor(proctor: widget.proctor, students: widget.students));
+                    AssignStudentsInProctor(proctor: widget.proctor, students: _selectedStudents));
                 }
                 ,
                 child: const Text("Add Selected User"),

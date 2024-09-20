@@ -94,7 +94,6 @@ addUserToClassroom({
       final studentrequest = ModelMutations.create(student);
       final studentResponse =
           await Amplify.API.mutate(request: studentrequest).response;
-      safePrint(studentResponse);
       if (studentResponse.hasErrors) {
         result.add(false);
       } else {
@@ -225,7 +224,7 @@ getallStudentsByProctor({required Proctor proctor}) async {
   final response = await Amplify.API.query(request: request).response;
   List<Student?>? students = response.data?.items;
   List res = graphqlresponsehandle(
-    emptyListresponse: students,
+      emptyListresponse: students,
       response: response,
       function: () {
         List<Student> studentsList = [];
